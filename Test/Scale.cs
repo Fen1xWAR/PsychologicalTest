@@ -1,7 +1,11 @@
-﻿namespace Test;
+﻿
+using System.Text.Json.Serialization;
 
+namespace Test;
+[Serializable]
 public class Scale : IShowable
 {
+    [JsonConstructor]
     public Scale(string scaleName, int scaleMaxValue, Dictionary<string, int> scaleValuesWithSigns)
     {
         ScaleName = scaleName;
@@ -10,11 +14,11 @@ public class Scale : IShowable
         CurrentValue = 0;
     }
 
-    private string ScaleName { get; set; }
-    private int ScaleMaxValue { get; set; }
-    private Dictionary<string,int> ScaleValuesWithSigns { get; set; }
+     public string ScaleName { get; set; }
+     public int ScaleMaxValue { get; set; }
+     public Dictionary<string,int> ScaleValuesWithSigns { get; set; }
 
-    public int CurrentValue { get; set; }
+  [JsonIgnore]  public int CurrentValue { get; set; }
 
     private string GetCurrentSingByValue()
     {

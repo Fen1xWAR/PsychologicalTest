@@ -1,20 +1,25 @@
-﻿namespace Test;
+﻿using System.Text.Json.Serialization;
 
-public  class Question : IShowable
+namespace Test;
+
+[Serializable]
+public class Question : IShowable
+
 {
-   private readonly string _questionText;
-   public readonly int QuestionCost;
-   public readonly int QuestionCategory;
+    [JsonConstructor]
+    public Question(string questionText, int questionCategory)
+    {
+        QuestionText = questionText;
+        QuestionCategory = questionCategory;
+    }
 
-   public Question( string questionText, int questionCost, int questionCategory)
-   {
-      QuestionCost = questionCost;
-      QuestionCategory = questionCategory;
-      _questionText = questionText;
-   }
+    public string QuestionText { get; set; }
 
-   public string DataToShow()
-   {
-      return  _questionText;
-   }
+    public int QuestionCategory { get; set; }
+
+
+    public string DataToShow()
+    {
+        return QuestionText;
+    }
 }

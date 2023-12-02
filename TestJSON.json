@@ -1,0 +1,35 @@
+﻿{
+  "TestName": "TestTitle",
+  "ScaleList": [
+    {
+      "Name": "FirstScale",
+      "MaxValue": 1,
+      "ScaleValues": {
+        "Ниже среднего": 0,
+        "Выше среднего": 1
+      }
+    },
+    {
+      "Name": "SecondScale",
+      "MaxValue": 2,
+      "ScaleValues": {
+        "Ниже среднего": 1,
+        "Выше среднего": 2
+      }
+    }
+  ],
+  "Questions": [
+    {
+      "Text": "I am a firstQuestion",
+      "AnswerVariant": 0
+    },
+    {
+      "Text": "I am a firstQuestion 2",
+      "AnswerVariant": 1
+    }
+  ],
+  "AnswersVariant": {
+    "нет": 0,
+    "да": 1
+  }
+}

@@ -1,13 +1,16 @@
-﻿namespace Test;
+﻿using System.Text;
+
+namespace Test;
 
 public class Test
 {
     //IO
-    public Test(ILoadData dataLoader, IShow shower, IReciever reciever)
+    public Test(ILoadData dataLoader, IShow shower, IReciever reciever, ISaver saver)
     {
        var data = dataLoader.LoadData();
         Shower = shower;
         Reciever = reciever;
+        Saver = saver;
         _testName = data.TestName;
         _questionCount = data.Questions.Count;
         _questions = data.Questions;
@@ -23,10 +26,13 @@ public class Test
     private IShow Shower { get; set; }
     private IReciever Reciever { get; set; }
     
+    private ISaver Saver { get; set; }
+    
     
     //Data
+    private User _user;
     private readonly string _testName;
-    private int _questionCount;
+    private readonly int _questionCount;
     private readonly Dictionary<string,int> _answersVariant;
     private readonly List<Question> _questions;
     private readonly List<Scale> _scales;
@@ -38,13 +44,8 @@ public class Test
     private void Init()
     {
         Shower.Show(_testName);
-        //Для чтения из консоли небольшой костыль (временно)
-        Shower.Show("Press y to proceed");
-        var recieve = Reciever.GetData();
-        if (recieve == "y")
-        {
-            ProceedCurrentQuestion();
-        }
+        GetUserData();
+        ProceedCurrentQuestion();
         
 
         // Shower.Show(CurrentQuestion.DataToShow());
@@ -60,7 +61,16 @@ public class Test
         // }
 
     }
+        // костыль!
+    private void GetUserData()
+    {
+        Shower.Show("Фио:");
+        var  fio = Reciever.GetData();
+        Shower.Show("Пол:");
+        var  sex = Reciever.GetData();
 
+       _user =  new User(fio, sex);
+    }
     private void ProceedCurrentQuestion()
     {
         var recieve = GetCurrentAnswers();
@@ -111,9 +121,15 @@ public class Test
 
     private void GetResults()
     {
+        var builder = new StringBuilder();
         foreach (var scale in _scales)
         {
-            Shower.Show(scale.DataToShow());
+            var data = scale.DataToShow();
+            builder.Append($"{data} \n \n");
+            Shower.Show(data);
         }
+        Saver.Save($"Name: {_user.Name} \nSex: {_user.Sex}\n \nResult: {builder}","Result.txt");
     }
+
+    
 }
