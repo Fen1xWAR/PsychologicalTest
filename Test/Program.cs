@@ -8,7 +8,8 @@ internal static class Program
 {
     private static void Main(string[] args)
     {
-        var simpleTest = new Test(new JsonLoader("EmotionalTest.json"), new ConsoleOutput(), new ConsoleInputReciever(),new ToTxtSaver());
+        var path = Path.Combine("..", "..", "..", "EmotionalTest.json");
+        var simpleTest = new Test(new JsonLoader(path), new ConsoleOutput(), new ConsoleInputReciever(),new ToTxtSaver());
         // var loader = new JsonLoader();
         // var data = loader.LoadData();
         // Console.WriteLine(data.TestName);
